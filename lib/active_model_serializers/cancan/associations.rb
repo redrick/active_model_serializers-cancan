@@ -13,8 +13,9 @@ module ActiveModel
           object.select {|item| find_serializable(item).can?(:read, item) }.map do |item|
             find_serializable(item).serializable_hash
           end
+          super
         end
-        alias_method_chain :serialize, :cancan
+        # alias_method_chain :serialize, :cancan
 
       end
 
@@ -24,8 +25,9 @@ module ActiveModel
           serializer = find_serializable(object)
           return nil unless !authorize? || serializer && serializer.can?(:read, object)
           serialize_without_cancan
+          super
         end
-        alias_method_chain :serialize, :cancan
+        # alias_method_chain :serialize, :cancan
 
       end
     end
